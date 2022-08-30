@@ -1,2 +1,5 @@
 pytesseract
 pillow
+mysql-connector-python
+gunicorn
+flask

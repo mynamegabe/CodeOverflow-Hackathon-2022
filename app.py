@@ -4,20 +4,31 @@ import random
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from PIL import Image
 import os
+import mysql.connector
 
 app = Flask(__name__, static_url_path='',static_folder='static')
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['FILES_FOLDER'] = 'files'
 app.secret_key = "%032x" % random.getrandbits(128)
 
+def sqlConnection():
+    try:
+        conn = mysql.connector.connect(host="localhost", user="root", password="", database="ecology")
+        return conn
+    except:
+        print("Connection Failed")
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
-
 @app.route('/businesses/<int:business_id>')
 def business(business_id):
-    # MySQL SELECT * FROM businesses WHERE id = business_id
+    conn = sqlConnection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM businesses WHERE id = %s", (business_id,))
+    business = cursor.fetchone()
+    cursor.close()
     return render_template('business.html', business = business)
 
 @app.route('/cart')
@@ -49,6 +60,36 @@ def upload():
         os.remove(filename)
         return render_template('index.html', text=text)
 
+# AUTHENTICATION
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        conn = sqlConnection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM users WHERE username = %s AND password = %s", (username, password))
+        user = cursor.fetchone()
+        if user:
+            return redirect(url_for('index'))
+        else:
+            return redirect(url_for('login'))
+    else:
+        return render_template('login.html')
+        
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        conn = sqlConnection()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO users (username, password) VALUES (%s, %s)", (username, password))
+        conn.commit()
+        return redirect(url_for('login'))
+    else:
+        return render_template('register.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
