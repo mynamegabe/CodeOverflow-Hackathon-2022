@@ -1,0 +1,36 @@
+{% extends "admin.html" %}
+{% set title = "Businesses" %}
+{% block content %}
+<div class="admin-dashboard column">
+    <h1>Businesses</h1>
+    <a href="/admin/businesses/add" class="btn btn-primary">+ Add Business</a>
+    <table>
+        <tr>
+            <th>Business ID</th>
+            <th>Business Name</th>
+            <th>Business Contact</th>
+            <th>Business Description</th>
+            <th>Business Category</th>
+            <th>Business Image</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for business in businesses %}
+        <tr>
+            <td>{{ business.business_id }}</td>
+            <td>{{ business.name }}</td>
+            <td>{{ business.contact }}</td>
+            <td>{{ business.description }}</td>
+            <td>{{ business.category }}</td>
+            <td>{{ business.background_image }}</td>
+            <td>
+                <a href="/admin/businesses/{{ business.business_id }}">View</a>
+                <a href="/admin/businesses/edit/{{ business.business_id }}">Edit</a>
+                <a href="/admin/businesses/delete/{{ business.business_id }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

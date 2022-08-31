@@ -44,7 +44,7 @@ def profile():
         token = request.cookies.get('token')
         conn = sqlConnection()
         cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM users WHERE token = %s", (token,))
+        cursor.execute("SELECT * FROM users WHERE session = %s", (token,))
         user = cursor.fetchone()
         cursor.close()
         return render_template('profile.html', user = user)
@@ -117,7 +117,7 @@ def admin():
         cursor.execute("SELECT * FROM users")
         users = cursor.fetchall()
         cursor.close()
-        return render_template('admin.html', users = users)
+        return render_template('admin_dashboard.html', users = users)
     else:
         return redirect(url_for('login'))
 
@@ -138,7 +138,7 @@ def admin_business(business_id):
     if checkAdmin():
         conn = sqlConnection()
         cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM businesses WHERE id = %s", (business_id,))
+        cursor.execute("SELECT * FROM businesses WHERE business_id = %s", (business_id,))
         business = cursor.fetchone()
         cursor.execute("SELECT * FROM products WHERE business_id = %s", (business_id,))
         products = cursor.fetchall()
@@ -147,19 +147,19 @@ def admin_business(business_id):
     else:
         return redirect(url_for('login'))
 
-@app.route('/admin/businesses/delete/<int:business_id>', methods=['POST'])
+@app.route('/admin/businesses/delete/<int:business_id>', methods=['GET', 'POST'])
 def admin_business_delete(business_id):
     if checkAdmin():
         conn = sqlConnection()
         cursor = conn.cursor(dictionary=True)
-        cursor.execute("DELETE FROM businesses WHERE id = %s", (business_id,))
+        cursor.execute("DELETE FROM businesses WHERE business_id = %s", (business_id,))
         conn.commit()
         cursor.close()
         return redirect(url_for('admin_businesses'))
     else:
         return redirect(url_for('login'))
 
-@app.route('/admin/businesses/add', methods=['POST'])
+@app.route('/admin/businesses/add', methods=['GET', 'POST'])
 def admin_business_add():
     if checkAdmin():
         if request.method == 'POST':
@@ -167,19 +167,20 @@ def admin_business_add():
             description = request.form['description']
             contact = request.form['contact']
             background_image = request.files['background_image']
+            category = request.form['category']
             filename = secure_filename(background_image.filename)
-            background_image.save(os.path.join(app.config['STATIC_FOLDER'], filename))
+            background_image.save(os.path.join(app.config['STATIC_FOLDER'], 'business/', filename))
             conn = sqlConnection()
             cursor = conn.cursor(dictionary=True)
-            cursor.execute("INSERT INTO businesses (name, description, contact, background_image) VALUES (%s, %s, %s, %s)", (name, description, contact, filename))
+            cursor.execute("INSERT INTO businesses (name, description, contact, background_image, category) VALUES (%s, %s, %s, %s, %s)", (name, description, contact, filename, category))
             conn.commit()
             return redirect(url_for('admin_businesses'))
         else:
-            return render_template('admin_business_add.html')
+            return render_template('admin_businesses_add.html')
     else:
         return redirect(url_for('login'))
 
-@app.route('/admin/businesses/edit/<int:business_id>', methods=['POST'])
+@app.route('/admin/businesses/edit/<int:business_id>', methods=['GET','POST'])
 def admin_business_edit(business_id):
     if checkAdmin():
         if request.method == 'POST':
@@ -226,7 +227,7 @@ def checkAdmin():
         token = request.cookies.get('token')
         conn = sqlConnection()
         cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM users WHERE token = %s", (token,))
+        cursor.execute("SELECT * FROM users WHERE session = %s", (token,))
         user = cursor.fetchone()
         cursor.close()
         if user["role"] == "admin":

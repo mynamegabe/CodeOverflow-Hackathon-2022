@@ -25,6 +25,7 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
+    height: 100%;
 }
 
 .nav-links > a {
@@ -41,4 +42,20 @@ body {
     justify-content: center;
     height: calc(100vh - 60px);
     background-color: #fff;
+}
+
+.nav-logo, .nav-logo > a {
+    height: calc(100% - 20px);
+    position: relative;
+}
+
+.logo {
+    height: 100px;
+    max-height: 100%;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }

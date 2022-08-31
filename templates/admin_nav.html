@@ -1,0 +1,11 @@
+<div class="admin nav">
+    <a href="/">
+        <img src="/static/img/Logo.svg" alt="logo" class="logo">
+    </a>
+    <div class="nav-links">
+        <a href="/admin" class="{% if title == 'Dashboard' %}active{% endif %}">Dashboard</a>
+        <a href="/admin/businesses" class="{% if title == 'Businesses' %}active{% endif %}">Businesses</a>
+        <a href="/admin/products">Products</a>
+        <a href="/admin/users">Users</a>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+{% extends "admin.html" %}
+{% set title = "Businesses" %}
+{% block content %}
+<div class="admin-dashboard column no-margin">
+    <h1>Business {{ business.business_id }}</h1>
+    <img src="/static/img/business/{{ business.background_image }}" alt="{{ business.name }}">
+    <h2>{{ business.name }}</h2>
+    <h4>{{ business.category }}</h4>
+    <p>{{ business.description }}</p>
+    <p>{{ business.contact }}</p>
+
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "admin.html" %}
+{% set title = "Businesses" %}
+{% block content %}
+<div class="admin-dashboard column">
+    <h1>Add Business</h1>
+    <form action="/admin/businesses/add" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name">Business Name</label>
+            <input type="text" name="name" id="name" placeholder="Business Name">
+        </div>
+        <div class="form-group">
+            <label for="contact">Business Contact</label>
+            <input type="text" name="contact" id="contact" placeholder="Business Contact">
+        </div>
+        <div class="form-group">
+            <label for="description">Business Description</label>
+            <input type="text" name="description" id="description" placeholder="Business Description">
+        </div>
+        <div class="form-group">
+            <label for="category">Business Category</label>
+            <input type="text" name="category" id="category" placeholder="Business Category">
+        </div>
+        <div class="form-group">
+            <label for="background_image">Business Image</label>
+            <input type="file" name="background_image" id="background_image" placeholder="Business Image">
+        </div>
+        <button type="submit" class="btn btn-primary">Add Business</button>
+</div>
+{% endblock %}
