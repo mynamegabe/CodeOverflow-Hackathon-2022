@@ -1,0 +1,54 @@
+{% extends "index.html" %}
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+<body>
+	<!--sidebar end-->
+	<div class="container center">
+		<div class="container-fluid" style="padding: 0;">
+		<div class="container pt-3 my-3 bg-white border">
+			<h1>Cart:</h1>	
+				<div class="form-row justify-content-center">
+					<table class="table">
+						<tr>
+						<th scope="col">Remove</th>
+						<th scope="col">#</th>
+						<th scope="col">Name</th>
+						<th scope="col">Price</th>
+						</tr>
+  		{% for x in range(products_list|length) %}
+			{%if products_list[x] != 0%}
+					<tr>
+						<th scope="row"><a href="/removecart/{{ products_list[x].get_product_id() }}"><img height="35px" width="35px" src="https://cdn-icons-png.flaticon.com/512/1828/1828945.png" alt="remove"></a></th>
+						<td>{{ x+1 }}</td>
+            <td>{{ products_list[x].get_name() }}</td>
+			<td>{{ products_list[x].get_price() }}</td>
+				</tr>
+			{%else%}
+			<tr>
+				<th scope="row">
+				</th>
+				<td>
+					{{x+1}}
+				</td>
+					<td>
+					</td>
+						<td>
+						</td>
+							<td>
+							</td>
+			</tr>
+				{%endif%}
+    	{% endfor %}
+				</table>
+				{%if products_list != []%}
+					<a href="/payment" style="position: absolute; bottom: 8px; right: 16px;"><button type="button" class="btn" style="background-color: #D81E5B; margin-bottom: 1em;">Checkout</button></a>
+					{%endif%}
+		</div>
+	</div>
+
+		</div>
+
+	<!--container for sidebar plus content-->
+		</div>
+</body>
+{% endblock %}
