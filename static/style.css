@@ -310,6 +310,10 @@ p a {
     object-fit: cover;
 }
 
+.carousel-item > h4 {
+    text-align: center;
+}
+
 .flex-row > div > img {
     height: 300px;
     object-fit: cover;
