@@ -59,7 +59,7 @@ img {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding-top: 80px;
+    padding-top: 120px;
     height: calc(100vh - 60px);
     background-color: #fff;
     gap: 80px;
