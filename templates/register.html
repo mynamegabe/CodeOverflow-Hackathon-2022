@@ -1,50 +1,32 @@
-<html>
-<head>
-    <title>Ecology</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anek+Telugu&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-		<a href="/" style="position: absolute; top: 8px; left: 16px;"><img height="40px" width="40px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Left_arrow.svg/434px-Left_arrow.svg.png" alt="arrow"></a>
-    {% if error %}
-        <p class="error" style="background-color: white; color: red; border: solid #3A3335; padding: 5px;"><strong>Error:</strong> {{ error }}</p>
-      {% endif %}
-     <div class="container" id="container">
-        <div class="form-container sign-in-container">
-            <form action="#" method="post">
-                <h1>Create Account</h1>
-                {{ render_field(form.first_name, class="form-control") }}
-			    {{ render_field(form.password, class="form-control") }}
-                {{ render_field(form.confirm, class="form-control") }}
-                {{ render_field(form.email, class="form-control") }}
-                <div class="form-group">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="gridCheck" required>
-                      <label class="form-check-label" for="gridCheck">
-                        Accept <a href="/termsandconditions">Terms and conditions</a>
-                      </label>
-                    </div>
-                  </div>
-                  <input type="submit" value="Sign Up" class="btn btn-primary"/>
-            </form>
-        </div>
-        <div class="overlay-container">
-            <div class="overlay">
-                <div class="overlay-panel overlay-right">
-                    <h1>Welcome Back!</h1>
-                    <p>To keep connected with us please login with your personal info</p>
-                    <a class="ghost" id="signIn" href="/login"><button>Sign In</button></a>
+{% set center = true %}
+{% extends "main.html" %}
+
+{% block content %}
+<div class="flex-row">
+    <div>
+        <div class="carousel-display">
+            <div class="carousel-display-item">
+                <div class="img">
+                    <img src="/static/img/illust-1.png" alt="">
+                </div>
+                <div class="text">
+                    <h2>Learn how your usage of Eco-sustainable products can make an impact with us</h2>
                 </div>
             </div>
         </div>
     </div>
-
-
-</body>
+    <div>
+        <img src="/static/img/Logo.svg" alt="Ecoplace" class="logo">
+        <h1>Get Started</h1>
+        <p>Already registered? <a href="/login">Log in here!</a></p>
+        <form action="/register" method="POST" class="standard-form">
+            <input type="text" name="username" placeholder="Username">
+            <input type="email" name="email" placeholder="Email">
+            <input type="password" name="password" placeholder="Password">
+            <input type="password" name="confirm-password" placeholder="Confirm Password">
+            <input type="submit" value="Sign Up" class="form-submit">
+        </form>
+        <p>Forgotten your password? <a href="/reset-password">Reset it here!</a></p>
+    </div>
+</div>
 {% endblock %}
-<footer>
-    <script type="text/javascript" src="/static/main.js"></script>
-</footer>
-</html>

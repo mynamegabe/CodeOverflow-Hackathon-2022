@@ -3,14 +3,51 @@
     <title>Ecoplace</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anek+Telugu&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Telugu&family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     {% include "nav.html" %}
-    <div class="main-body">
-    {% block content %}
-    {% endblock %}
+    <div class="main-body {% if center == true %}center{% endif %}">
+        {% block content %}
+        {% endblock %}
+        <div class="footer">
+            <div class="row flex-row">
+                <div>
+                    <img src="/static/img/logo-mini.png" alt="Ecoplace" class="logo">
+                    <div class="object-row slim mini" id="socials">
+                        <a href="#" target="_blank"><img src="/static/img/facebook.png" alt="facebook"></a>
+                        <a href="#" target="_blank"><img src="/static/img/instagram.png" alt="instagram"></a>
+                        <a href="#" target="_blank"><img src="/static/img/linkedin.png" alt="twitter"></a>
+                    </div>
+                    <a href="mailto:hello@ecogim.com">hello@ecogim.com</a>
+                </div>
+                <div>
+                    <h2 class="highlight-2">Quick Links</h2>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/faq">FAQ</a></li>
+                        <li><a href="/our-story">Our Story</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="highlight-2">Work with us</h2>
+                    <form>
+                        <fieldset>
+                            <input type="email" placeholder="Email">
+                            <button type="submit" class="submit">&gt;</button>
+                        </fieldset>
+                    </form>
+                    <div class="object-row slim mini" id="payment-methods">
+                        <img src="/static/img/mastercard.png" alt="mastercard">
+                        <img src="/static/img/visa.png" alt="visa">
+                        <img src="/static/img/paypal.png" alt="paypal">
+                    </div>
+                </div>
+            </div>
+            <h3>&copy; 2022 Ecogim SG All rights reserved</h3>
+        </div>
     </div>
 </body>
 <footer>
