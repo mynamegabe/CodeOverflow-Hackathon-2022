@@ -7,33 +7,32 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-	<a href="/" style="position: absolute; top: 8px; left: 16px;"><img height="40px" width="40px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Left_arrow.svg/434px-Left_arrow.svg.png" alt="arrow"></a>
-	{% if error %}
-		<p class="error" style="background-color: white; color: red; border: solid #3A3335; padding: 5px;"><strong>Error:</strong> {{ error }}</p>
-
-  {% endif %}
-
-<div class="container" id="container">
-	<div class="form-container sign-in-container">
-		<form action="#" method="post">
-			<h1>Sign in</h1>
-			{{ render_field(form.email, class="form-control") }}
-			{{ render_field(form.password, class="form-control") }}
-			<p><strong><a href="/forgotpsemail">Forgot Password?</a></strong></p>
-			<input type="submit" value="Sign In" class="btn btn-primary"/>
-		</form>
-	</div>
-	<div class="overlay-container">
-		<div class="overlay">
-			<div class="overlay-panel overlay-right">
-				<h1>Hello</h1>
-				<p>Enter your personal details and start a journey with us</p>
-				<a class="ghost" id="signUp" href="/register"><button>Sign Up</button></a>
-			</div>
-		</div>
-	</div>
-</div>
-</body>
+    {% include "nav.html" %}
+    {% block content %}
+    <div class="main-body">
+        <div class="container">
+            <img src="Logo.svg" alt="Company image">
+        </div>
+        <div class="container">
+            <h1><strong>Welcome Back!</strong></h1>
+            <h5>Not Registered <a href="/register">Sign up here</a></h5>
+        </div>
+        <form action="/register" method="POST">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" name="email" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+            </div>
+        <button type="button" class="btn btn-primary btn-lg btn-block">Login</button>
+        </form>
+        <div style="float: left">
+            <img src="Onboard-Illust_1.png" alt="image" />
+        </div>
+    </div>
+    {% endblock %}
 </body>
 <footer>
     <script type="text/javascript" src="/static/main.js"></script>
