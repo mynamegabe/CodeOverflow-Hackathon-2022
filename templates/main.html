@@ -1,5 +1,19 @@
 <html>
 <head>
-    <title>Ecology</title>
+    <title>Ecoplace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Telugu&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
+<body>
+    {% include "nav.html" %}
+    <div class="main-body">
+    {% block content %}
+    {% endblock %}
+    </div>
+</body>
+<footer>
+    <script type="text/javascript" src="/static/main.js"></script>
+</footer>
 </html>
