@@ -2,7 +2,7 @@ import cv2
 import pytesseract
 import random
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 from PIL import Image
 import os
 import mysql.connector
