@@ -1,0 +1,49 @@
+{% extends "main.html" %}
+
+{% block content %}
+<div class="row flex-column">
+    <!-- Featured business -->
+    <h1 class="highlight" id="featured">Featured Businesses</h1>
+    <div class="carousel">
+    {% for b in featured %}
+    <div class="carousel-item" href="/business/{{ b['business_id'] }}">
+        <div class="compound-img focus">
+            <img src="/static/img/business/{{ b['background_image'] }}" alt="">
+            <img src="/static/img/business/{{ b['logo_image']}}" alt="" class="center">
+        </div>
+        <h3>{{ b['name'] }}</h3>
+    </div>
+    {% endfor %}
+    </div>
+</div>
+<div class="row flex-column">
+    <!-- Food & Beverage -->
+    <h1 class="highlight" id="food">Food & Beverage</h1>
+    <div class="carousel">
+        {% for b in food %}
+        <div class="carousel-item" href="/business/{{ b['business_id'] }}">
+            <div class="compound-img focus">
+                <img src="/static/img/business/{{ b['background_image'] }}" alt="">
+                <img src="/static/img/business/{{ b['logo_image']}}" alt="" class="center">
+            </div>
+            <h3>{{ b['name'] }}</h3>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="row flex-column">
+    <!-- Fashion -->
+    <h1 class="highlight" id="fashion">Self-care</h1>
+    <div class="carousel">
+        {% for b in care %}
+        <div class="carousel-item" href="/business/{{ b['business_id'] }}">
+            <div class="compound-img focus">
+                <img src="/static/img/business/{{ b['background_image'] }}" alt="">
+                <img src="/static/img/business/{{ b['logo_image']}}" alt="" class="center">
+            </div>
+            <h3>{{ b['name'] }}</h3>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

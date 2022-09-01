@@ -1,0 +1,24 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="row flex-column">
+    <h1 class="highlight">Scan your receipts</h1>
+    <p>Verify your purchases to receive points and redeem rewards!</p>
+    <!-- Receipt scanner with camera -->
+    <div class="row flex-row slim">
+        <div class="flex-column">
+            <button id="start-camera" class="btn btn-primary">Open Camera</button>
+            <video id="video" width="350" height="700" autoplay></video>
+        </div>
+        <div class="flex-column" id="receipt-scan">
+            <div>
+                <button id="click-photo" class="btn btn-primary">Take Photo</button>
+                <button type="submit" class="btn btn-primary" id="submit-receipt">Submit</button>
+                <input type="hidden" id="receipt-image" name="receipt-image" value="">
+            </div>
+            <canvas id="canvas" width="350" height="700"></canvas>
+        </div>
+        <script type="text/javascript" src="/static/camera.js"></script>
+    </div>
+</div>
+{% endblock%}

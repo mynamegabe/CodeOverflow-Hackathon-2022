@@ -7,7 +7,7 @@
         <p>
             An all-in-one platform connecting eco-sustainable businesses with consumers while allowing them to make a sustainable positive impact to climate change
         </p>
-        <button class="btn btn-primary">Shop now ></button>
+        <a href="/shop" class="btn btn-primary">Shop now ></a>
     </div>
     <div>
         <div class="compound-img">
@@ -31,7 +31,7 @@
     <h1>Product Catalogue</h1>
     <div class="carousel">
         {% for b in businesses %}
-        <div class="carousel-item">
+        <div class="carousel-item" href="/business/{{ b['business_id'] }}">
             <div class="compound-img focus">
                 <img src="/static/img/business/{{ b['background_image'] }}" alt="">
                 <img src="/static/img/business/{{ b['logo_image']}}" alt="" class="center">

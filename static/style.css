@@ -44,7 +44,7 @@ img {
     font-size: 14px;
 }
 
-.nav-links > a > img {
+.nav-links > a > img, .resnav-links > a > img {
     vertical-align: middle;
 }
 
@@ -60,7 +60,7 @@ img {
     align-items: center;
     justify-content: flex-start;
     padding-top: 150px;
-    height: calc(100vh - 60px);
+    height: calc(100% - 150px);
     background-color: #fff;
     gap: 80px;
 }
@@ -69,6 +69,10 @@ img {
     align-items: center;
     justify-content: center;
     padding-top: 0px;
+}
+
+.flex-column.short {
+    gap: 40px;
 }
 
 .nav-logo, .nav-logo > a {
@@ -106,6 +110,14 @@ img {
     align-items: center;
     justify-content: space-between !important;
     gap: 70px;
+}
+
+.flex-row.slim {
+    justify-content: flex-start !important;
+}
+
+.row.fill {
+    height: calc(100% - 322.44px);
 }
 
 .flex-row > div {
@@ -157,6 +169,7 @@ input {
     border-radius: 5px;
     outline: none;
     border: none;
+    text-decoration: none;
 }
 
 .btn-primary {
@@ -307,12 +320,17 @@ p a {
     display: flex;
     flex-direction: column;
     align-items: center;
+    cursor: pointer;
 }
 
 .carousel-item .compound-img > img:nth-child(1) {
     width: 300px;
     height: 300px;
     object-fit: cover;
+}
+
+.carousel-item > h3 {
+    margin-top: 10px;
 }
 
 .carousel-item > h4 {
@@ -472,6 +490,41 @@ fieldset > .submit {
     color: grey;
 }
 
+.profile-img {
+    width: 248px;
+    height: 248px;
+    object-fit: cover;
+}
+
+.profile-img > img {
+    object-fit: cover;
+    padding: 20px;
+    height: 200px;
+    width: 200px;
+    background: linear-gradient(#f3f3f3,#f3f3f3) padding-box, linear-gradient(45deg, var(--pri-color), #CEE26B) border-box;
+    border-radius: 50em;
+    background-size: 300% 300%;
+    border: 4px solid transparent;
+    animation: border 3s infinite;
+    
+}
+
+#receipt-scan {
+    display: none;
+}
+
+#receipt-scan > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+canvas {
+    margin-top: 10px;
+}
+
 @media screen and (max-width: 700px) {
     .icon-header > img.top-right {
         position: static;
@@ -492,24 +545,24 @@ fieldset > .submit {
 
     .resnav-logo {
         height: 30px;
+        margin-left: 20px;
     }
 
     .resnav {
         display: block;
         width: 100%;
-        padding: 0px 20px;
+        padding: 0px;
         height: 60px;
         background-color: #F5F5F5;
         position: fixed;
         top: 0px;
         left: 0px;
         z-index: 100;
-        overflow: hidden;
     }
 
     .resnav-bar {
         height: 60px;
-        width: calc(100% - 40px);
+        width: calc(100% - 20px);
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -521,18 +574,31 @@ fieldset > .submit {
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
-        gap: 20px;
+        gap: 5px;
         width: 100%;
         padding: 0px;
         margin: 0px;
-        margin-top: 20px;
         height: 0px;
         overflow: hidden;
         transition: height 0.5s ease-in-out;
+        background-color: #F5F5F5;
+        padding-left: 20px;
+    }
+
+    .resnav-links > a {
+        color: grey;
+        font-size: 16px;
+        font-weight: bold;
+        text-decoration: none;
+        padding: 10px 0px;
     }
 
     .resnav-menu {
         height: 30px;
+    }
+
+    .resnav.active > .resnav-links {
+        height: auto;
     }
 }
 
@@ -541,4 +607,16 @@ fieldset > .submit {
         flex-wrap: wrap;
         justify-content: center !important;
     }
+}
+
+@keyframes border {
+    0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }

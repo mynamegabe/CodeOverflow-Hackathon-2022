@@ -13,6 +13,7 @@ app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['FILES_FOLDER'] = 'files'
 app.config['STATIC_FOLDER'] = 'static'
 app.secret_key = "%032x" % random.getrandbits(128)
+pytesseract.pytesseract.tesseract_cmd = r'C:\\Users\\Gabriel\Desktop\\Competitions\\SIT Code Overflow 2022\\CodeOverflow-Hackathon-2022\\tesseract\\tesseract.exe'
 
 def sqlConnection():
     try:
@@ -25,7 +26,7 @@ def sqlConnection():
 def index():
     conn = sqlConnection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM businesses")
+    cursor.execute("SELECT * FROM businesses LIMIT 3")
     businesses = cursor.fetchall()
     cursor.close()
     return render_template('index.html', businesses=businesses)
@@ -39,6 +40,20 @@ def business(business_id):
     business['tags'] = business['categories'].split(',')
     cursor.close()
     return render_template('business.html', business = business)
+
+@app.route('/shop')
+def shop():
+    conn = sqlConnection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM businesses")
+    businesses = cursor.fetchall()
+    cursor.close()
+    
+    featured = [ businesses[i] for i in random.sample(range(len(businesses)), 3) ]
+    food = [ business for business in businesses if "food" in business['categories'].lower() ]
+    care = [ business for business in businesses if "care" in business['categories'].lower() ]
+    return render_template('shop.html', food=food, featured=featured, care=care)
+
 
 @app.route('/cart')
 def cart():
@@ -58,9 +73,22 @@ def profile():
         return redirect(url_for('login'))
 
 # Receipt scanning
-@app.route('/scan', methods=['GET'])
+@app.route('/scan-receipts', methods=['GET', 'POST'])
 def scan_receipt():
-    return render_template('scan.html')
+    if request.method == 'POST':
+        if 'receipt' not in request.files:
+            return redirect(request.url)
+        file = request.files['receipt']
+        if file:
+            # generate random filename
+            filename = "%032x" % random.getrandbits(128) + ".png"
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            img = cv2.imread(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            text = pytesseract.image_to_string(img)
+            print(text)
+            return render_template('scan-receipts.html')
+    else:
+        return render_template('scan-receipts.html')
 
 # Receipt upload
 @app.route('/upload', methods=['POST'])
@@ -250,5 +278,10 @@ def checkAdmin():
     else:
         return False
 
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+    
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=80, debug=True)
