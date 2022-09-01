@@ -291,6 +291,7 @@ p a {
     align-items: flex-start;
     gap: 10px;
     max-width: calc(100vw - 40px);
+    flex: 1;
 }
 
 .object-row {
