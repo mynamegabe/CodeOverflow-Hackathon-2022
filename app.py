@@ -25,12 +25,13 @@ def sqlConnection():
 def index():
     return render_template('index.html')
 
-@app.route('/businesses/<int:business_id>')
+@app.route('/business/<int:business_id>')
 def business(business_id):
     conn = sqlConnection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM businesses WHERE id = %s", (business_id,))
+    cursor.execute("SELECT * FROM businesses WHERE business_id = %s", (business_id,))
     business = cursor.fetchone()
+    business['tags'] = business['categories'].split(',')
     cursor.close()
     return render_template('business.html', business = business)
 

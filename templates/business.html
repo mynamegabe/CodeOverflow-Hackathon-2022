@@ -1,0 +1,45 @@
+{% extends "main.html" %}
+
+{% block content %}
+<div class="row flex-row">
+    <div class="mid-column-gap">
+        <div class="object-row" id="tags">
+            {% for tag in business['tags'] %}
+            <span class="tag">
+                {{ tag }}
+            </span>
+            {% endfor %}
+        </div>
+        <h1>Shop at <span class="highlight">{{ business['name'] }}</span></h1>
+        <div class="object-row slim" id="rating">
+            {% for i in range(0, business['rating']) %}
+            <img src="/static/img/star.png" alt="">
+            {% endfor %}
+            {% for i in range(business['rating'], 5) %}
+            <img src="/static/img/no-star.png">
+            {% endfor %}
+            <span>4.5k reviews</span>
+        </div>
+        <p>{{ business['description'] }}</p>
+        <button class="btn btn-primary">View site ></button>
+    </div>
+    <div>
+        <div class="compound-img">
+            <img src="/static/img/business/{{ business['background_image'] }}" alt="" class="semi-img">
+            <img src="/static/img/eco-friendly.png" alt="" class="bottom-left">
+        </div>
+    </div>
+</div>
+<div class="row flex-row">
+    <div>
+        <h1>About <span class="highlight">SUPERBEE</span></h1>
+        <p>{{ business['benefit'] }}</p>
+    </div>
+    <div>
+        <div class="card back-1">
+            <img src="/static/img/Logo.svg" alt="" class="logo">
+            <p>Marketplace for collective impact around the globe</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
