@@ -22,14 +22,19 @@ let canvas = document.querySelector("#canvas");
 
 camera_button.addEventListener('click', async function() {
    	let stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
-    $("#receipt-scan").css('display', 'block');
+    $("#start-camera").css('height', '0px');
+    $("#start-camera").css('width', '0px');
+    $("#start-camera").css('padding', '0px');
 	video.srcObject = stream;
+    canvas.width = $("#video").width();
+    canvas.height = $("#video").height();
 });
 
 click_button.addEventListener('click', function() {
    	canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
    	let image_data_url = canvas.toDataURL('image/png');
     $("#receipt-image").attr('value', image_data_url);
+    $()
 });
 
 $('#submit-receipt').click(function() {
@@ -49,3 +54,7 @@ $('#submit-receipt').click(function() {
         }
     });
 });
+
+$("#open-receipt-popup").click(function() {
+    $(".popup").toggleClass("active");
+})

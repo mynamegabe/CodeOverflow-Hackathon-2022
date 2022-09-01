@@ -178,6 +178,12 @@ input {
     width: fit-content;
 }
 
+.btn-primary > img {
+    width: 25px;
+    height: 25px;
+    margin-left: 5px;
+}
+
 p a {
     color: #000;
     font-size: 14px;
@@ -267,6 +273,10 @@ p a {
     height: 30%;
 }
 
+.compound-img .logo {
+    max-width: 60%;
+}
+
 .compound-img > .center { 
     position: absolute;
     top: 50%;
@@ -307,6 +317,7 @@ p a {
     align-items: center;
     justify-content: flex-start;;
     gap: 30px;
+    width: 100%;
     max-width: calc(100vw - 40px);
     margin-top: 20px;
     overflow: auto;
@@ -327,6 +338,11 @@ p a {
     width: 300px;
     height: 300px;
     object-fit: cover;
+    transition: filter 0.5s;
+}
+
+.carousel-item:hover .compound-img > img:nth-child(1) {
+    filter: blur(3px) grayscale(0.5);
 }
 
 .carousel-item > h3 {
@@ -547,23 +563,196 @@ h1 > img {
     animation: rotate 5s linear infinite;
 }
 
-.steps > span {
-    font-size: 30px;
+.steps-hori span {
+    font-size: 38px;
     font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 25px;
 }
 
-.steps > span:nth-child(1) {
+.steps-hori .one {
     color: #E3E3B9;
 }
 
-.steps > span:nth-child(2) {
+.steps-hori .two {
     color: #5D9194;
 }
 
-.steps > span:nth-child(3) {
+.steps-hori .three {
     color: #F06E42;
 }
 
+.steps-hori hr {
+    width: 190px;
+    height: 0px;
+    border: 1px solid black;
+}
+
+.steps-hori {
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.steps-hori > div {
+    width: 250px;
+}
+
+.steps-hori > div > div {
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    border-radius:  50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.steps-hori img {
+    height: 50px;
+}
+
+.steps-hori > .mid-img {
+    width: fit-content;
+    height: 100px;
+    display: flex;
+    align-items: center;
+}
+
+.accordion {
+    width: 900px;
+    max-width: calc(100vw - 60px);
+    padding-top: 20px;
+}
+
+.accordion > .item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    border-bottom: 1px solid black;
+    padding: 10px 10px;
+}
+
+.accordion .header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.accordion .expand {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 3;
+}
+
+.popup.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup > div {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.camera-stack {
+    width: 350px;
+    height: 700px;
+    max-width: calc(100vw - 100px);
+    max-height: calc(100vh - 250px);
+    position: relative;
+    border: 1px solid white;
+    border-radius: 20px;
+}
+
+.camera-stack > * {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.camera-button-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.camera-button-stack > *{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100px;
+    height: 100px;
+    transform: translate(-50%, -50%);
+}
+
+#start-camera {
+    z-index: 2;
+    transition: height 0.5s ease-in-out, width 0.5s ease-in-out, padding 0.5s ease-in-out;
+    overflow: hidden;
+}
+
+#click-photo {
+    z-index: 1;
+    border-radius: 50%;
+}
+
+#upload-receipt > fieldset {
+    border: none !important;
+}
+
+.popup .close {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    font-size: 10px;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    border: none;
+    background-color: #fb4d3d;
+    color: white;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    z-index: 4;
+}
+
+.reward {
+    gap: 5px;
+}
+
+.reward > img {
+    height: 100px;
+    object-fit: cover;
+}
 
 @media screen and (max-width: 700px) {
     .icon-header > img.top-right {

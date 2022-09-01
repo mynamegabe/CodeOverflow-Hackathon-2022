@@ -1,7 +1,7 @@
 import cv2
 import pytesseract
 import random
-from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory, send_file
 from werkzeug.utils import secure_filename
 from PIL import Image
 import os
@@ -77,7 +77,7 @@ def profile():
         return redirect(url_for('login'))
 
 # Receipt scanning
-@app.route('/scan-receipts', methods=['GET', 'POST'])
+@app.route('/scan-receipts', methods=['POST'])
 def scan_receipt():
     if request.method == 'POST':
         if 'receipt' not in request.files:
@@ -90,9 +90,18 @@ def scan_receipt():
             img = cv2.imread(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             text = pytesseract.image_to_string(img)
             print(text)
-            return render_template('scan-receipts.html')
+            conn = sqlConnection()
+            cursor = conn.cursor(dictionary=True)
+            uid = request.cookies.get('token')
+            cursor.execute("INSERT INTO receipts (uid, file, extracted_text) VALUES (%s, %s, %s)", (uid, filename, text))
+            conn.commit()
+            cursor.close()
+            resp = redirect(url_for('redeem'))
+            return resp
+
     else:
         return render_template('scan-receipts.html')
+        
 
 # Receipt upload
 @app.route('/upload', methods=['POST'])
@@ -145,6 +154,18 @@ def register():
     else:
         return render_template('register.html')
 
+@app.route('/rewards')
+def rewards():
+    conn = sqlConnection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM rewards")
+    rewards = cursor.fetchall()
+    cursor.execute("SELECT points FROM users WHERE session = %s", (request.cookies.get('token'),))
+    points = cursor.fetchone()['points']
+    cursor.close()
+    return render_template('rewards.html', rewards=rewards, points=points)
+
+
 
 # Admin endpoints
 
@@ -153,10 +174,15 @@ def admin():
     if checkAdmin():
         conn = sqlConnection()
         cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM users")
-        users = cursor.fetchall()
+        cursor.execute("SELECT count(uid) AS c FROM users")
+        users = cursor.fetchone()
+        cursor.execute("SELECT count(business_id) AS c FROM businesses")
+        businesses = cursor.fetchone()
+        cursor.execute("SELECT count(product_id) AS c FROM products")
+        products = cursor.fetchone()
         cursor.close()
-        return render_template('admin_dashboard.html', users = users)
+        print(products)
+        return render_template('admin_dashboard.html', users = users, businesses = businesses, products = products)
     else:
         return redirect(url_for('login'))
 
@@ -263,6 +289,45 @@ def admin_product_add(business_id):
             return render_template('admin_product_add.html')
     else:
         return redirect(url_for('login'))
+
+@app.route('/admin/receipts')
+def admin_receipts():
+    if checkAdmin():
+        conn = sqlConnection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM receipts")
+        receipts = cursor.fetchall()
+        cursor.close()
+        return render_template('admin_receipts.html', receipts = receipts)
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/admin/receipts/approve/<int:rid>/<int:points>', methods=['GET'])
+def admin_receipts_approve(rid, points):
+    if checkAdmin():
+            session = request.cookies.get('token')
+            conn = sqlConnection()
+            cursor = conn.cursor(dictionary=True)
+            cursor.execute("UPDATE receipts SET approved = 1, points = %s WHERE receipt_id = %s", (points, rid,))
+            cursor.execute("UPDATE users SET points = points + %s WHERE session = %s", (points, session,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('admin_receipts'))
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/admin/receipts/<int:receipt_id>')
+def admin_receipt(receipt_id):
+    if checkAdmin():
+        conn = sqlConnection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT file FROM receipts WHERE receipt_id = %s", (receipt_id,))
+        receiptimage = cursor.fetchone()
+        cursor.close()
+        return send_file(os.path.join(app.config['UPLOAD_FOLDER'], receiptimage['file']), mimetype='image/png')
+    else:
+        return redirect(url_for('login'))
+
 
 def generateToken():
     return "%032x" % random.getrandbits(128)

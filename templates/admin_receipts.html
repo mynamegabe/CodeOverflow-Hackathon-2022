@@ -1,0 +1,44 @@
+{% extends "admin.html" %}
+{% set title = "Receipts" %}
+{% block content %}
+<div class="admin-dashboard column">
+    <h1>Receipts</h1>
+    <table>
+        <tr>
+            <th>Receipt ID</th>
+            <th>Business ID</th>
+            <th>Extracted_text</th>
+            <th>Receipt Image</th>
+            <th>Approved</th>
+            <th>Points</th>
+            <th></th>
+        </tr>
+        {% for r in receipts %}
+        <tr>
+            <td>{{ r.receipt_id }}</td>
+            <td>{{ r.business }}</td>
+            <td>{{ r.extracted_text }}</td>
+            <td><a href="/admin/receipts/{{r.receipt_id}}">{{ r.file }}</a></td>
+            <td>{{ r.approved }}</td>
+            <td><input type="number" id="points-{{ r.receipt_id }}" name="points"></td>
+            <td><button class="approve" id="{{ r.receipt_id }}" class="btn btn-primary">Approve</button></td>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<script>
+    $('.approve').click(function() {
+    let id = $(this).attr('id');
+    let points = $('#points-' + id).val()
+    $.ajax({
+        url: '/admin/receipts/approve/'+id+'/'+points,
+        type: 'GET',
+        success: function(response) {
+            console.log(response);
+        }
+    });
+    console.log('a')
+});
+</script>
+{% endblock %}

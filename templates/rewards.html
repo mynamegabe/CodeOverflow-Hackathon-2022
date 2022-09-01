@@ -1,0 +1,18 @@
+{% extends "main.html" %}
+
+{% block content %}
+<div class="row flex-column fill">
+    <h5>Balance: {{ points }} points </h5>
+    <h1 class="highlight">Rewards</h1>
+    <div class="carousel">
+        {% for r in rewards %}
+        <div class="carousel-item reward">
+            <img src="/static/img/{{ r['image'] }}" alt="">
+            <h3>${{r['value'] }} {{ r['name'] }}</h3>
+            <h4>{{ r['points_required'] }} points</h4>
+            <a href="/redeem/{{ r['id'] }}" class="btn btn-primary">Redeem</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
