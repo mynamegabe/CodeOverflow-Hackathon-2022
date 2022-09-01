@@ -242,6 +242,10 @@ p a {
     height: fit-content;
 }
 
+.compound-img.focus > img:first-child {
+    filter: blur(1px) grayscale(0.1);
+}
+
 .compound-img > .bottom-left {
     position: absolute;
     bottom: -30%;

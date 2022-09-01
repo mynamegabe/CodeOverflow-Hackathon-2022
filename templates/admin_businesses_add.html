@@ -13,17 +13,34 @@
             <input type="text" name="contact" id="contact" placeholder="Business Contact">
         </div>
         <div class="form-group">
+            <label for="url">Business URL</label>
+            <input type="url" name="url" id="url" placeholder="Business URL">
+        </div>
+        <div class="form-group">
             <label for="description">Business Description</label>
             <input type="text" name="description" id="description" placeholder="Business Description">
         </div>
         <div class="form-group">
-            <label for="category">Business Category</label>
+            <label for="description">Business Benefits</label>
+            <input type="text" name="benefit" id="benefit" placeholder="Ecogim Benefits">
+        </div>
+        <div class="form-group">
+            <label for="category">Main Business Category</label>
             <input type="text" name="category" id="category" placeholder="Business Category">
+        </div>
+        <div class="form-group">
+            <label for="category">Business Categories</label>
+            <input type="text" name="categories" id="categories" placeholder="Business Categories (comma-separated)">
         </div>
         <div class="form-group">
             <label for="background_image">Business Image</label>
             <input type="file" name="background_image" id="background_image" placeholder="Business Image">
         </div>
+        <div class="form-group">
+            <label for="background_image">Business Logo</label>
+            <input type="file" name="logo_image" id="logo_image" placeholder="Business Logo">
+        </div>
+        
         <button type="submit" class="btn btn-primary">Add Business</button>
 </div>
 {% endblock %}

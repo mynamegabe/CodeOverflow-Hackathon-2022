@@ -23,7 +23,12 @@ def sqlConnection():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    conn = sqlConnection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM businesses")
+    businesses = cursor.fetchall()
+    cursor.close()
+    return render_template('index.html', businesses=businesses)
 
 @app.route('/business/<int:business_id>')
 def business(business_id):
@@ -86,7 +91,7 @@ def login():
         user = cursor.fetchone()
         if user:
             resp = redirect(url_for('index'))
-            resp.set_cookie('token', generateToken())
+            resp.set_cookie('token', user['session'])
             return resp
         else:
             return redirect(url_for('login'))
@@ -99,9 +104,10 @@ def register():
         username = request.form['username']
         email = request.form['email']
         password = hashlib.md5(request.form['password'].encode()).hexdigest()
+        token = generateToken()
         conn = sqlConnection()
         cursor = conn.cursor(dictionary=True)
-        cursor.execute("INSERT INTO users (username, email, password) VALUES (%s, %s, %s)", (username, email, password))
+        cursor.execute("INSERT INTO users (username, email, password, session) VALUES (%s, %s, %s, %s)", (username, email, password, token))
         conn.commit()
         return redirect(url_for('login'))
     else:
@@ -168,12 +174,18 @@ def admin_business_add():
             description = request.form['description']
             contact = request.form['contact']
             background_image = request.files['background_image']
-            category = request.form['category']
+            logo = request.files['logo_image']
+            main_category = request.form['category']
+            categories = request.form['categories']
+            benefit = request.form['benefit']
+            url = request.form['url']
             filename = secure_filename(background_image.filename)
-            background_image.save(os.path.join(app.config['STATIC_FOLDER'], 'business/', filename))
+            background_image.save(os.path.join(app.config['STATIC_FOLDER'], 'img/business/', filename))
+            filename2 = secure_filename(logo.filename)
+            logo.save(os.path.join(app.config['STATIC_FOLDER'], 'img/business/', filename2))
             conn = sqlConnection()
             cursor = conn.cursor(dictionary=True)
-            cursor.execute("INSERT INTO businesses (name, description, contact, background_image, category) VALUES (%s, %s, %s, %s, %s)", (name, description, contact, filename, category))
+            cursor.execute("INSERT INTO businesses (name, description, contact, background_image, logo_image, main_category, categories, benefit, url) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (name, description, contact, filename, filename2, main_category, categories, benefit, url))
             conn.commit()
             return redirect(url_for('admin_businesses'))
         else:

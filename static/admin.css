@@ -1,7 +1,9 @@
 .main-body {
     height: 100vh;
-    width: 100vw;
+    width: 100%;
     flex-direction: row;
+    padding-top: 0px;
+    gap: 20px;
 }
 
 .admin.nav {
@@ -12,6 +14,8 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
+    position: static;
+    padding-left: 40px;
 }
 
 .admin.nav > div {
@@ -33,7 +37,7 @@
     content: "";
     position: absolute;
     top: 0;
-    right: -20px;
+    right: 0px;
     width: 5px;
     height: 100%;
     background-color: #000;
@@ -66,6 +70,14 @@
     padding: 20px;
     background-color: #fff;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.card-1 p {
+    text-align: left;
 }
 
 .no-margin *, .card *{
