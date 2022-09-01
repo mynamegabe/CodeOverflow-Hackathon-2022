@@ -126,6 +126,7 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = hashlib.md5(request.form['password'].encode()).hexdigest()
+        print(password)
         conn = sqlConnection()
         cursor = conn.cursor(dictionary=True)
         cursor.execute("SELECT * FROM users WHERE username = %s AND password = %s", (username, password))
