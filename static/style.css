@@ -525,6 +525,46 @@ canvas {
     margin-top: 10px;
 }
 
+h1 > img {
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+}
+
+.scroller {
+    position: relative;
+}
+
+.scroller > span {
+    font-size: 30px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.scroller > img {
+    animation: rotate 5s linear infinite;
+}
+
+.steps > span {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.steps > span:nth-child(1) {
+    color: #E3E3B9;
+}
+
+.steps > span:nth-child(2) {
+    color: #5D9194;
+}
+
+.steps > span:nth-child(3) {
+    color: #F06E42;
+}
+
+
 @media screen and (max-width: 700px) {
     .icon-header > img.top-right {
         position: static;
@@ -619,4 +659,13 @@ canvas {
 	100% {
 		background-position: 0% 50%;
 	}
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

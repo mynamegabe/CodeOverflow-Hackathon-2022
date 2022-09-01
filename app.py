@@ -59,6 +59,10 @@ def shop():
 def cart():
     return render_template('cart.html')
 
+@app.route('/redeem')
+def redeem():
+    return render_template('redeem.html')
+
 @app.route('/profile')
 def profile():
     if 'token' in request.cookies:
@@ -282,6 +286,6 @@ def checkAdmin():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
-    
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=80, debug=True)
