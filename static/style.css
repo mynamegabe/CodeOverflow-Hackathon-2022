@@ -198,7 +198,12 @@ p a {
     background-color: #f3f3f3;
     border-radius: 50px;
     width: 450px;
+    max-width: calc(100vw - 60px);
     height: 600px;
+}
+
+.carousel-display-item {
+    width: 100%;
 }
 
 .carousel-display-item img {
@@ -731,6 +736,8 @@ h1 > img {
 
 #upload-receipt > fieldset {
     border: none !important;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .popup .close {

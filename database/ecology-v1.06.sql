@@ -19,6 +19,12 @@
 -- Table structure for table `businesses`
 --
 
+CREATE DATABASE IF NOT EXISTS `ecoplace` DEFAULT CHARACTER SET utf8mb4 ;
+USE `ecoplace` ;
+
+CREATE USER 'ecoplace'@'localhost' IDENTIFIED BY 'P@ssw0rd' ;
+GRANT ALL PRIVILEGES ON ecoplace.* TO 'ecoplace'@'localhost' WITH GRANT OPTION;
+
 DROP TABLE IF EXISTS `businesses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
